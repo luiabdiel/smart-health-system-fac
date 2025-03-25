@@ -14,6 +14,10 @@ public class DoctorService {
     private final DoctorRepository doctorRepository;
 
     public DoctorResponseDto create(DoctorRequestDto doctorRequestDto) {
+        this.doctorRepository
+                .findByCrm(doctorRequestDto.getCrm())
+                .ifPresent(doctor -> { throw new IllegalArgumentException("CRM already registered");});
+
         Doctor doctor = this.doctorRepository.save(doctorRequestDto.toEntity());
 
         return DoctorResponseDto.fromEntity(doctor);
