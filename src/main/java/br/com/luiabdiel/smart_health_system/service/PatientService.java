@@ -32,4 +32,12 @@ public class PatientService {
 
         return patients.map(PatientResponseDto::fromEntity);
     }
+
+    public PatientResponseDto findById(Long id) {
+        Patient patient = this.patientRepository
+                .findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Patient not found"));
+
+        return PatientResponseDto.fromEntity(patient);
+    }
 }

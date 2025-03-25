@@ -31,4 +31,11 @@ public class PatientController {
 
         return ResponseEntity.ok().body(patientResponseDto);
     }
+
+    @GetMapping(value = "/{id}")
+    public ResponseEntity<PatientResponseDto> findById(@PathVariable(value = "id") Long id) {
+        PatientResponseDto patientResponseDto = this.patientService.findById(id);
+
+        return ResponseEntity.ok().body(patientResponseDto);
+    }
 }
