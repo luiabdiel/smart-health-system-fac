@@ -5,12 +5,11 @@ import br.com.luiabdiel.smart_health_system.controller.dto.DoctorResponseDto;
 import br.com.luiabdiel.smart_health_system.service.DoctorService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(value = "/doctors")
@@ -24,5 +23,12 @@ public class DoctorController {
         DoctorResponseDto doctorResponseDto = this.doctorService.create(doctorRequestDto);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(doctorResponseDto);
+    }
+
+    @GetMapping
+    public ResponseEntity<Page<DoctorResponseDto>> findAll(Pageable pageable) {
+        Page<DoctorResponseDto> doctorResponseDto = this.doctorService.findAll(pageable);
+
+        return ResponseEntity.ok().body(doctorResponseDto);
     }
 }

@@ -5,6 +5,8 @@ import br.com.luiabdiel.smart_health_system.controller.dto.DoctorResponseDto;
 import br.com.luiabdiel.smart_health_system.model.Doctor;
 import br.com.luiabdiel.smart_health_system.repository.DoctorRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -21,5 +23,11 @@ public class DoctorService {
         Doctor doctor = this.doctorRepository.save(doctorRequestDto.toEntity());
 
         return DoctorResponseDto.fromEntity(doctor);
+    }
+
+    public Page<DoctorResponseDto> findAll(Pageable pageable) {
+        Page<Doctor> patients = this.doctorRepository.findAll(pageable);
+
+        return patients.map(DoctorResponseDto::fromEntity);
     }
 }
