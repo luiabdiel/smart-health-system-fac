@@ -31,4 +31,11 @@ public class DoctorController {
 
         return ResponseEntity.ok().body(doctorResponseDto);
     }
+
+    @GetMapping(value = "/{crm}")
+    public ResponseEntity<DoctorResponseDto> findByCrm(@PathVariable(value = "crm") String crm) {
+        DoctorResponseDto doctorResponseDto = this.doctorService.findByCrm(crm);
+
+        return ResponseEntity.ok().body(doctorResponseDto);
+    }
 }

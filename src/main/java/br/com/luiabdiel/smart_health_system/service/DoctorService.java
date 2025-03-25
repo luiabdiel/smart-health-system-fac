@@ -30,4 +30,12 @@ public class DoctorService {
 
         return patients.map(DoctorResponseDto::fromEntity);
     }
+
+    public DoctorResponseDto findByCrm(String crm) {
+        Doctor doctor = this.doctorRepository
+                .findByCrm(crm)
+                .orElseThrow(() -> new IllegalArgumentException("Doctor not found"));
+
+        return DoctorResponseDto.fromEntity(doctor);
+    }
 }
