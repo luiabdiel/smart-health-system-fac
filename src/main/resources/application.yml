@@ -1,3 +1,14 @@
 spring:
   application:
     name: smart-health-system
+
+  # POSTGRES
+  datasource:
+    url: jdbc:postgresql://localhost:5432/DEVELOPMENT_smart_health_system_db
+    username: root
+    password: root
+
+server:
+  port: 8080
+  servlet:
+    context-path: /api/v1

@@ -1,0 +1,26 @@
+version: '3.8'
+
+services:
+  # POSTGRES
+  postgres:
+    image: postgres:latest
+    container_name: postgres-local
+    restart: always
+    environment:
+      POSTGRES_DB: DEVELOPMENT_smart_health_system_db
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: root
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    command: ["postgres", "-c", "fsync=off", "-c", "full_page_writes=off"]
+    networks:
+      - network-backend
+
+networks:
+  network-backend:
+    driver: bridge
+
+volumes:
+  postgres_data:
