@@ -18,11 +18,15 @@ public class Patient {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false)
     private String name;
 
+    @Column(unique = true, nullable = false)
     private String cpf;
 
+    @Column(name = "birth_date" ,nullable = false)
     private LocalDate birthDate;
 
+    @Column(nullable = false)
     private String phone;
 }
