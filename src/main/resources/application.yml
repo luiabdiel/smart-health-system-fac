@@ -8,6 +8,14 @@ spring:
     username: root
     password: root
 
+  # JPA
+  jpa:
+    show-sql: true
+    database: postgresql
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: update
+
 server:
   port: 8080
   servlet:
