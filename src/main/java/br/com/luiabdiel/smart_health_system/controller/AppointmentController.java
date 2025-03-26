@@ -27,8 +27,8 @@ public class AppointmentController {
 
     @GetMapping
     public ResponseEntity<Page<AppointmentResponseDto>> findAll(Pageable pageable) {
-        Page<AppointmentResponseDto> appointmentResponseDtos = this.appointmentService.findAll(pageable);
+        Page<AppointmentResponseDto> appointmentResponseDto = this.appointmentService.findAll(pageable);
 
-        return ResponseEntity.ok().body(appointmentResponseDtos);
+        return ResponseEntity.ok().body(appointmentResponseDto);
     }
 }
