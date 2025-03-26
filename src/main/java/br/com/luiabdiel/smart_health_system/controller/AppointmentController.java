@@ -32,13 +32,24 @@ public class AppointmentController {
         return ResponseEntity.ok().body(appointmentsResponseDto);
     }
 
-    @GetMapping(value = "/{id}")
+    @GetMapping(value = "/doctor/{id}")
     public ResponseEntity<Page<AppointmentResponseDto>> findAllAppointmentsByDoctorId(
             Pageable pageable,
             @PathVariable(value = "id") Long id
     ) {
         Page<AppointmentResponseDto> appointmentsResponseDto = this.appointmentService.
                 findAllAppointmentsByDoctorId(pageable, id);
+
+        return ResponseEntity.ok().body(appointmentsResponseDto);
+    }
+
+    @GetMapping(value = "/patient/{id}")
+    public ResponseEntity<Page<AppointmentResponseDto>> findAllAppointmentsByPatientId(
+            Pageable pageable,
+            @PathVariable(value = "id") Long id
+    ) {
+        Page<AppointmentResponseDto> appointmentsResponseDto = this.appointmentService.
+                findAllAppointmentsByPatientId(pageable, id);
 
         return ResponseEntity.ok().body(appointmentsResponseDto);
     }
