@@ -44,4 +44,10 @@ public class AppointmentService {
 
         return appointments.map(AppointmentResponseDto::fromEntity);
     }
+
+    public Page<AppointmentResponseDto> findAllAppointmentsByDoctorId(Pageable pageable, Long id) {
+        Page<Appointment> appointments = this.appointmentRepository.findAllAppointmentsByDoctorId(pageable, id);
+
+        return appointments.map(AppointmentResponseDto::fromEntity);
+    }
 }

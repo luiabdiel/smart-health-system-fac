@@ -27,9 +27,9 @@ public class PatientController {
 
     @GetMapping
     public ResponseEntity<Page<PatientResponseDto>> findAll(Pageable pageable) {
-        Page<PatientResponseDto> patientResponseDto = this.patientService.findAll(pageable);
+        Page<PatientResponseDto> patientsResponseDto = this.patientService.findAll(pageable);
 
-        return ResponseEntity.ok().body(patientResponseDto);
+        return ResponseEntity.ok().body(patientsResponseDto);
     }
 
     @GetMapping(value = "/{id}")

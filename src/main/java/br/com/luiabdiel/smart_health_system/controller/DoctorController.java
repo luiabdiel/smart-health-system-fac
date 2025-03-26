@@ -27,9 +27,9 @@ public class DoctorController {
 
     @GetMapping
     public ResponseEntity<Page<DoctorResponseDto>> findAll(Pageable pageable) {
-        Page<DoctorResponseDto> doctorResponseDto = this.doctorService.findAll(pageable);
+        Page<DoctorResponseDto> doctorsResponseDto = this.doctorService.findAll(pageable);
 
-        return ResponseEntity.ok().body(doctorResponseDto);
+        return ResponseEntity.ok().body(doctorsResponseDto);
     }
 
     @GetMapping(value = "/{crm}")
