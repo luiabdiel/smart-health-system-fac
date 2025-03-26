@@ -18,6 +18,10 @@ public class DoctorResponseDto {
 
     private String specialty;
 
+    public Doctor toEntity() {
+        return new Doctor(this.id, this.name, this.crm, this.specialty);
+    }
+
     public static DoctorResponseDto fromEntity(Doctor doctor) {
         return new DoctorResponseDto(doctor.getId(), doctor.getName(), doctor.getCrm(), doctor.getSpecialty());
     }

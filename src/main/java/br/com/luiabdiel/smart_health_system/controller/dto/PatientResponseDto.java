@@ -16,6 +16,10 @@ public class PatientResponseDto {
 
     private String cpf;
 
+    public Patient toEntity() {
+        return new Patient(this.id, this.name, this.cpf, null, null);
+    }
+
     public static PatientResponseDto fromEntity(Patient patient) {
         return new PatientResponseDto(patient.getId(), patient.getName(), patient.getCpf());
     }
