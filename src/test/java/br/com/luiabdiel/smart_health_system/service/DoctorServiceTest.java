@@ -14,6 +14,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
@@ -63,5 +64,22 @@ class DoctorServiceTest {
         assertNotNull(response);
         assertEquals(expectedId, response.getContent().get(0).getId());
         verify(this.doctorRepository, times(1)).findAll(pageable);
+    }
+
+    @Test
+    void shouldFindDoctorByCRMSuccessfully() {
+        var expectedId = 1L;
+        var expectedName = "any";
+        var expectedCrm = "any";
+        var expectedSpecialty = "any";
+
+        Doctor doctor = new Doctor(expectedId, expectedName, expectedCrm, expectedSpecialty);
+
+        when(this.doctorRepository.findByCrm(any())).thenReturn(Optional.of(doctor));
+        DoctorResponseDto response = this.doctorService.findByCrm(expectedCrm);
+
+        assertNotNull(response);
+        assertEquals(expectedId, response.getId());
+        verify(this.doctorRepository, times(1)).findByCrm(any());
     }
 }
