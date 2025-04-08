@@ -8,6 +8,12 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
@@ -38,5 +44,24 @@ class DoctorServiceTest {
         assertNotNull(response);
         assertEquals(expectedId, response.getId());
         verify(this.doctorRepository, times(1)).save(any());
+    }
+
+    @Test
+    void shouldFindAllDoctorsSuccessfully() {
+        var expectedId = 1L;
+        var expectedName = "any";
+        var expectedCrm = "any";
+        var expectedSpecialty = "any";
+
+        Doctor doctor = new Doctor(expectedId, expectedName, expectedCrm, expectedSpecialty);
+        Page<Doctor> expectedPage = new PageImpl<>(List.of(doctor));
+        Pageable pageable = PageRequest.of(0, 10);
+
+        when(this.doctorRepository.findAll(pageable)).thenReturn(expectedPage);
+        Page<DoctorResponseDto> response = this.doctorService.findAll(pageable);
+
+        assertNotNull(response);
+        assertEquals(expectedId, response.getContent().get(0).getId());
+        verify(this.doctorRepository, times(1)).findAll(pageable);
     }
 }
