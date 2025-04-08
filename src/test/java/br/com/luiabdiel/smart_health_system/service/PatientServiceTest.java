@@ -15,6 +15,7 @@ import org.springframework.data.domain.Pageable;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -84,5 +85,29 @@ class PatientServiceTest {
         assertNotNull(response);
         assertEquals(expectedId, response.getContent().get(0).getId());
         verify(this.patientRepository, times(1)).findAll(pageable);
+    }
+
+    @Test
+    void shouldFindPatientByIdSuccessfully() {
+        var expectedId = 1L;
+        var expectedName = "any";
+        var expectedCpf = "any";
+        var expectedBirthDate = LocalDate.of(2025,4, 8);
+        var expectedPhone = "any";
+
+        Patient patient = new Patient(
+                expectedId,
+                expectedName,
+                expectedCpf,
+                expectedBirthDate,
+                expectedPhone
+        );
+
+        when(this.patientRepository.findById(any())).thenReturn(Optional.of(patient));
+        PatientResponseDto response = this.patientService.findById(expectedId);
+
+        assertNotNull(response);
+        assertEquals(expectedId, response.getId());
+        verify(this.patientRepository, times(1)).findById(any());
     }
 }
