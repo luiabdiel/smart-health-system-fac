@@ -84,4 +84,28 @@ class AppointmentServiceTest {
         assertEquals(expectedId, response.getContent().get(0).getId());
         verify(this.appointmentRepository, times(1)).findAllAppointmentsByDoctorId(pageable, expectedId);
     }
+
+    @Test
+    void shouldFindAllAppointmentsByPatientId() {
+        var expectedId = 1L;
+        var expectedDate = LocalDate.of(2025, 4, 17);
+        var expectedPatient = new Patient();
+        var expectedDoctor = new Doctor();
+
+        Appointment appointment = new Appointment(
+                expectedId,
+                expectedDate,
+                expectedPatient,
+                expectedDoctor
+        );
+        Page<Appointment> expectedPage = new PageImpl<>(List.of(appointment));
+        Pageable pageable = PageRequest.of(0, 10);
+
+        when(this.appointmentRepository.findAllAppointmentsByPatientId(pageable, expectedId)).thenReturn(expectedPage);
+        Page<AppointmentResponseDto> response = this.appointmentService.findAllAppointmentsByPatientId(pageable, expectedId);
+
+        assertNotNull(response);
+        assertEquals(expectedId, response.getContent().get(0).getId());
+        verify(this.appointmentRepository, times(1)).findAllAppointmentsByPatientId(pageable, expectedId);
+    }
 }
