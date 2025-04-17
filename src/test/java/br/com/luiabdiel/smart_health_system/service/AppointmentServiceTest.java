@@ -1,5 +1,6 @@
 package br.com.luiabdiel.smart_health_system.service;
 
+import br.com.luiabdiel.smart_health_system.controller.dto.AppointmentRequestDto;
 import br.com.luiabdiel.smart_health_system.controller.dto.AppointmentResponseDto;
 import br.com.luiabdiel.smart_health_system.model.Appointment;
 import br.com.luiabdiel.smart_health_system.model.Doctor;
@@ -18,6 +19,7 @@ import org.springframework.data.domain.Pageable;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -36,6 +38,47 @@ class AppointmentServiceTest {
 
     @Mock
     private DoctorRepository doctorRepository;
+
+    @Test
+    void shouldCreateAppointmentSuccessfully() {
+        var expectedId = 1L;
+        var expectedDate = LocalDate.of(2025, 4, 17);
+        var expectedPatient = new Patient(
+                expectedId,
+                "any",
+                "any",
+                LocalDate.of(2025, 4, 17),
+                "any"
+        );
+        var expectedDoctor = new Doctor(
+                expectedId,
+                "any",
+                "any",
+                "any"
+        );
+
+        Appointment appointment = new Appointment(
+                expectedId,
+                expectedDate,
+                expectedPatient,
+                expectedDoctor
+        );
+        AppointmentRequestDto appointmentRequestDto = new AppointmentRequestDto(
+                expectedDate,
+                expectedId,
+                expectedId
+        );
+
+        when(patientRepository.findById(expectedId)).thenReturn(Optional.of(expectedPatient));
+        when(doctorRepository.findById(expectedId)).thenReturn(Optional.of(expectedDoctor));
+        when(this.appointmentRepository.save(any())).thenReturn(appointment);
+
+        AppointmentResponseDto response = this.appointmentService.create(appointmentRequestDto);
+
+        assertNotNull(response);
+        assertEquals(expectedId, response.getId());
+        verify(this.appointmentRepository, times(1)).save(any());
+    }
 
     @Test
     void shouldFindAllAppointmentsSuccessfully() {
