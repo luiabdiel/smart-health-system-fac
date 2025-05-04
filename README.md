@@ -18,7 +18,7 @@ O objetivo deste projeto é fornecer uma API RESTful robusta e segura, utilizand
 
 - 📦 A arquitetura segue o padrão em camadas.
 
-## 🔐 Autenticação
+### 🔐 Autenticação
 
 O sistema utiliza **JWT (JSON Web Token)** para autenticação. As rotas protegidas exigem um token válido, que é obtido ao autenticar o usuário via o endpoint `/auth`.
 
@@ -60,3 +60,14 @@ A documentação está disponível via Swagger:
 🔗 [Acessar Swagger](http://localhost:8080/api/v1/swagger-ui/index.html#/)
 
 > Obs: A URL acima é acessível somente enquanto o projeto estiver em execução localmente.
+
+### 🎓 Projeto Acadêmico
+Este projeto foi desenvolvido como parte do curso de Análise e Desenvolvimento de Sistemas no Centro Universitário Internacional - UNINTER, com o objetivo de aplicar na prática os conceitos de:
+
+ - Arquitetura de Software
+
+ - Boas práticas com testes automatizados
+
+ - Segurança com autenticação JWT
+
+ - Documentação de APIs com Swagger
