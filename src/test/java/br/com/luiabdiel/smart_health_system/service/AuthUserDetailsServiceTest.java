@@ -43,4 +43,18 @@ class AuthUserDetailsServiceTest {
                 .anyMatch(auth -> auth.getAuthority().equals("ROLE_ADMIN")));
         verify(userRepository, times(1)).findByUsername(username);
     }
+
+    @Test
+    void shouldThrowExceptionWhenUserNotFound() {
+        String username = "nonexistent";
+
+        when(userRepository.findByUsername(username)).thenReturn(Optional.empty());
+
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+            authUserDetailsService.loadUserByUsername(username);
+        });
+
+        assertEquals("User not found.", exception.getMessage());
+        verify(userRepository, times(1)).findByUsername(username);
+    }
 }
