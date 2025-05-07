@@ -104,6 +104,38 @@ class AppointmentServiceTest {
     }
 
     @Test
+    void shouldThrowExceptionWhenDoctorNotFound() {
+        var expectedId = 1L;
+        var expectedDate = LocalDate.of(2025, 4, 17);
+        var expectedPatient = new Patient(
+                expectedId,
+                "any",
+                "any",
+                LocalDate.of(2025, 4, 17),
+                "any"
+        );
+
+        AppointmentRequestDto appointmentRequestDto = new AppointmentRequestDto(
+                expectedDate,
+                expectedId,
+                expectedId
+        );
+
+        when(patientRepository.findById(expectedId)).thenReturn(Optional.of(expectedPatient));
+        when(doctorRepository.findById(expectedId)).thenReturn(Optional.empty());
+
+        IllegalArgumentException exception = assertThrows(
+                IllegalArgumentException.class,
+                () -> appointmentService.create(appointmentRequestDto)
+        );
+
+        assertEquals("Doctor not found", exception.getMessage());
+        verify(patientRepository, times(1)).findById(expectedId);
+        verify(doctorRepository, times(1)).findById(expectedId);
+        verify(appointmentRepository, never()).save(any());
+    }
+
+    @Test
     void shouldFindAllAppointmentsSuccessfully() {
         var expectedId = 1L;
         var expectedDate = LocalDate.of(2025, 4, 17);
