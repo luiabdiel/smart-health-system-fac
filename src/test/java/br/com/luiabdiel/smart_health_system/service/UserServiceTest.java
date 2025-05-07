@@ -84,9 +84,9 @@ class UserServiceTest {
 
     @Test
     void shouldLoginSuccessfully() {
-        String username = "testuser";
-        String rawPassword = "password123";
-        String encodedPassword = "encodedPassword123";
+        String username = "any_name";
+        String rawPassword = "any_password";
+        String encodedPassword = "any_password_encoded";
         String expectedToken = "mocked.jwt.token";
 
         User user = new User(1L, username, encodedPassword);

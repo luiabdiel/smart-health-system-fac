@@ -26,8 +26,8 @@ class AuthUserDetailsServiceTest {
 
     @Test
     void shouldLoadUserByUsernameSuccessfully() {
-        String username = "testuser";
-        String password = "encodedPassword";
+        String username = "any_user";
+        String password = "any_password";
         Long id = 1L;
 
         User user = new User(id, username, password);
