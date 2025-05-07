@@ -66,4 +66,18 @@ class UserServiceTest {
         assertEquals(expectedUsername, response.getUsername());
         verify(userRepository, times(1)).findByUsername(expectedUsername);
     }
+
+    @Test
+    void shouldThrowExceptionWhenUserNotFound() {
+        String username = "nonexistent";
+
+        when(userRepository.findByUsername(username)).thenReturn(java.util.Optional.empty());
+
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+            userService.findByUsername(username);
+        });
+
+        assertEquals("User not found.", exception.getMessage());
+        verify(userRepository, times(1)).findByUsername(username);
+    }
 }
