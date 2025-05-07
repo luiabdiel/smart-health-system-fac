@@ -4,6 +4,7 @@ import br.com.luiabdiel.smart_health_system.controller.dto.UserRequestDto;
 import br.com.luiabdiel.smart_health_system.controller.dto.UserResponseDto;
 import br.com.luiabdiel.smart_health_system.model.User;
 import br.com.luiabdiel.smart_health_system.repository.UserRepository;
+import br.com.luiabdiel.smart_health_system.shared.util.JwtUtil;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -79,5 +80,30 @@ class UserServiceTest {
 
         assertEquals("User not found.", exception.getMessage());
         verify(userRepository, times(1)).findByUsername(username);
+    }
+
+    @Test
+    void shouldLoginSuccessfully() {
+        String username = "testuser";
+        String rawPassword = "password123";
+        String encodedPassword = "encodedPassword123";
+        String expectedToken = "mocked.jwt.token";
+
+        User user = new User(1L, username, encodedPassword);
+        UserRequestDto userRequestDto = new UserRequestDto(username, rawPassword);
+
+        when(userRepository.findByUsername(username)).thenReturn(java.util.Optional.of(user));
+        when(passwordEncoder.matches(rawPassword, encodedPassword)).thenReturn(true);
+
+        try (var mockedJwt = mockStatic(JwtUtil.class)) {
+            mockedJwt.when(() -> JwtUtil.generateToken(username)).thenReturn(expectedToken);
+
+            String token = userService.login(userRequestDto);
+
+            assertNotNull(token);
+            assertEquals(expectedToken, token);
+            verify(userRepository, times(1)).findByUsername(username);
+            verify(passwordEncoder, times(1)).matches(rawPassword, encodedPassword);
+        }
     }
 }
