@@ -48,4 +48,22 @@ class UserServiceTest {
         verify(passwordEncoder, times(1)).encode(rawPassword);
         verify(userRepository, times(1)).save(any(User.class));
     }
+
+    @Test
+    void shouldFindUserByUsernameSuccessfully() {
+        Long expectedId = 1L;
+        String expectedUsername = "any_name";
+        String expectedPassword = "any_password_encoded";
+
+        User user = new User(expectedId, expectedUsername, expectedPassword);
+
+        when(userRepository.findByUsername(expectedUsername)).thenReturn(java.util.Optional.of(user));
+
+        UserResponseDto response = userService.findByUsername(expectedUsername);
+
+        assertNotNull(response);
+        assertEquals(expectedId, response.getId());
+        assertEquals(expectedUsername, response.getUsername());
+        verify(userRepository, times(1)).findByUsername(expectedUsername);
+    }
 }
