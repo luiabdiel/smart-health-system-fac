@@ -106,4 +106,25 @@ class UserServiceTest {
             verify(passwordEncoder, times(1)).matches(rawPassword, encodedPassword);
         }
     }
+
+    @Test
+    void shouldThrowExceptionWhenInvalidCredentials() {
+        String username = "wronguser";
+        String rawPassword = "wrongpass";
+        String encodedPassword = "encodedPassword123";
+
+        User user = new User(1L, username, encodedPassword);
+        UserRequestDto userRequestDto = new UserRequestDto(username, rawPassword);
+
+        when(userRepository.findByUsername(username)).thenReturn(java.util.Optional.of(user));
+        when(passwordEncoder.matches(rawPassword, encodedPassword)).thenReturn(false);
+
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+            userService.login(userRequestDto);
+        });
+
+        assertEquals("Invalid credentials.", exception.getMessage());
+        verify(userRepository, times(1)).findByUsername(username);
+        verify(passwordEncoder, times(1)).matches(rawPassword, encodedPassword);
+    }
 }
