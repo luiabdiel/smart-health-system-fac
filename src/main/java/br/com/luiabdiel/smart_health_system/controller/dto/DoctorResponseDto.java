@@ -19,7 +19,7 @@ public class DoctorResponseDto {
     private String specialty;
 
     public Doctor toEntity() {
-        return new Doctor(this.id, this.name, this.crm, this.specialty);
+        return new Doctor(this.id, this.name, this.crm, this.specialty, null);
     }
 
     public static DoctorResponseDto fromEntity(Doctor doctor) {

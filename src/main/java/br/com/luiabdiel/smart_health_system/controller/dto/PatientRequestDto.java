@@ -28,6 +28,6 @@ public class PatientRequestDto {
     private String phone;
 
     public Patient toEntity() {
-        return new Patient(null, this.name, this.cpf, this.birthDate, this.phone);
+        return new Patient(null, this.name, this.cpf, this.birthDate, this.phone, null);
     }
 }

@@ -21,7 +21,7 @@ public class UserService {
     public UserResponseDto registerUser(UserRequestDto userRequestDto) {
         log.info("Iniciando registro de novo usuário: {}", userRequestDto.getUsername());
         String encryptedPassword = this.passwordEncoder.encode(userRequestDto.getPassword());
-        User user = new User(userRequestDto.getUsername(), encryptedPassword);
+        User user = new User(null, userRequestDto.getUsername(), encryptedPassword);
 
         var savedUser = this.userRepository.save(user);
 

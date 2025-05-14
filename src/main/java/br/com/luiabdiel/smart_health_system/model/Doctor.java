@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 @Entity
 @Table(name = "TB_DOCTORS")
 @Getter @Setter
@@ -24,4 +26,7 @@ public class Doctor {
 
     @Column(nullable = false)
     private String specialty;
+
+    @OneToMany(mappedBy = "doctor")
+    private List<Appointment> appointment;
 }

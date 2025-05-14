@@ -20,6 +20,6 @@ public class DoctorRequestDto {
     private String specialty;
 
     public Doctor toEntity() {
-        return new Doctor(null, this.name, this.crm, this.specialty);
+        return new Doctor(null, this.name, this.crm, this.specialty, null);
     }
 }

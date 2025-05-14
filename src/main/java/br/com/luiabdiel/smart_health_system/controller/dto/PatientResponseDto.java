@@ -17,7 +17,7 @@ public class PatientResponseDto {
     private String cpf;
 
     public Patient toEntity() {
-        return new Patient(this.id, this.name, this.cpf, null, null);
+        return new Patient(this.id, this.name, this.cpf, null, null, null);
     }
 
     public static PatientResponseDto fromEntity(Patient patient) {
